@@ -1,18 +1,29 @@
 import React from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { ChatPage, LoginPage, RegisterPage } from '../pages'
+import {  Navigate, Route, Routes } from 'react-router-dom'
+import { LoginPage, RegisterPage,ChatPage } from '../pages'
 
+
+import '../css/login-register.css'
 export const AppRouter = () => {
   return (
-     <BrowserRouter>
-        <div>
+    <div className="container">
+		<div className="container-login100">
+			<div className="wrap-login10 p-t-50 p-b-90">
+   
+       
             <Routes>
-                <Route path="/login" element={<LoginPage />}/>
-                <Route path="/register" element={<RegisterPage />}/>
-                <Route path="/" element={<ChatPage />}/>
+                <Route path="/auth/login" element={<LoginPage />}/>
+                <Route path="/auth/register" element={<RegisterPage/>}/>
+                <Route  path="/" element={<ChatPage/>}/>
                 <Route path="*" element={<Navigate to="/" replace={true}  />}/>
             </Routes>
+       
         </div>
-    </BrowserRouter>
+        </div>
+        </div>
+
+         
+
+    
   )
 }
