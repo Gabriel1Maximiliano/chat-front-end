@@ -1,83 +1,155 @@
 import { useCallback, useState } from "react";
 import socketApi from "../api/socketApi";
-//import { fetchWithoutToken } from "../helpers/fetch";
-import { AuthContex } from "./AuthContex"
+import axios from "axios";
+import { AuthContex } from "./AuthContex";
 
 
 
-export interface AuthProviderProps {
-    children?: JSX.Element | JSX.Element[]
+export interface InitialStateProps {
+  uid: string | null;
+  checking: boolean;
+  logged: boolean;
+  name: string | null;
+  email: string | null;
 }
 
-export interface InitialStateProps extends AuthProviderProps {
-    uid     :string | null;
-    checking:boolean;
-    logged  :boolean;
-    name    :string | null;
-    email   :string | null;
-}
+const InitialState: InitialStateProps = {
+  uid: null,
+  checking: true,
+  logged: false,
+  name: null,
+  email: null,
+};
 
-const InitialState:InitialStateProps = {
-    uid     : null,
-    checking: true,
-    logged  : false,
-    name    : null,
-    email   : null                 
-}
+export const AuthProvider = ({ children }: any) => {
+  const token = localStorage.getItem("token");
 
-export const AuthProvider = ( { children }:AuthProviderProps ) => {
+  const [auth, setAuth] = useState<InitialStateProps>(InitialState);
 
+  const loginUSer = async (email: string, password: string) => {
+    try {
+      const { data } = await socketApi.post("/login/loginUser", {
+        email,
+        password,
+      });
 
-    const [auth, setAuth] = useState<InitialStateProps>(InitialState);
+      if (data.ok) {
+        const { name, email, onLIne, uid } = data.user;
 
-    const loginUSer = async( email:string, password:string )=>{
-  try {
-    
-    const { data } = await socketApi.post('/login/loginUser',{ email,password });
-    console.log(data)
-    if( data.ok ){
+        localStorage.setItem("token", data.token);
 
-      const { name,email,onLIne,uid } = data.user;
-       localStorage.setItem('token', data.token);
-       setAuth({
-         uid,
-         name,
-         email,
-         checking:false,
-         logged:true,
-       })
-
+        setAuth((prev) => ({
+          ...prev,
+          uid,
+          name,
+          email,
+          checking: false,
+          logged: true,
+        }));
+      }
+      return data.ok;
+    } catch (error: any) {
+      return error.response.data.msg;
     }
-    return data.ok;
-  } catch (error) {
-    console.log(error)
-    return false;
-    
-  }
+  };
 
-     
-    }
-    
-    const registerUser = (  email:string, name:string, password:string )=>{
-        
-    }
-    const verifyToken = useCallback( () => {
+  const registerUser = async (
+    email: string,
+    name: string,
+    password: string
+  ) => {
+    try {
+      console.log("registro");
 
-    },
-    
-      []
-    )
-    
+      const { data } = await socketApi.post("/login/newUser", {
+        email,
+        name,
+        password,
+      });
+      if (data.ok) {
+        const { name, email, onLIne, uid } = data.user;
+
+        localStorage.setItem("token", data.token);
+
+        setAuth({
+          uid,
+          name,
+          email,
+          checking: false,
+          logged: true,
+        });
+      }
+      //console.log(data);
+
+      return data.ok;
+    } catch (error: any) {
+      console.log(error.response.data.msg);
+
+      return error.response.data.msg;
+    }
+  };
+
+ 
+
+  const verifyToken = useCallback(async () => {
+    const token = localStorage.getItem('token');
+    // const token =
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDFlMjI3YzNlNmI3OWU3YmZhZjg3NTQiLCJpYXQiOjE2Nzk3MDAxODksImV4cCI6MTY3OTc4NjU4OX0.m5px97kg7UvkaxsOXrWqm68XGTBDlU6j_qYShlaNRuI";
+    if (!token) {
+      setAuth({
+        uid: null,
+        checking: false,
+        logged: false,
+        name: null,
+        email: null,
+      });
+      return false;
+    }
+
+    const { data } = await socketApi.get("/login/renewToken", {
+      headers: { "x-token": token },
+    });
+   
+    //return 'hola'
+
+    if (data.ok) {
+      const { name, email, uid } = data.user;
+
+      localStorage.setItem("token", data.token);
+
+      setAuth({
+        uid,
+        name,
+        email,
+        checking: false,
+        logged: true,
+      });
+
+      return true;
+    } else {
+      setAuth({
+        uid: null,
+        name: null,
+        email: null,
+        checking: false,
+        logged: false,
+      });
+
+      return false;
+    }
+  }, []);
 
 
   return (
-    <AuthContex.Provider value={{
+    <AuthContex.Provider
+      value={{
+        auth,
         loginUSer,
         registerUser,
         verifyToken,
-        auth,
-    }}>
+      }}
+    >
       {children}
     </AuthContex.Provider>
-  )
-}
+  );
+};

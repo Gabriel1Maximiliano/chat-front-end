@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 export const LoginPage = () => {
 
   const { loginUSer } = useContext( AuthContex )
+ 
 
   const [ form, setForm ] = useState<any>({
     email:'',
@@ -55,10 +56,11 @@ export const LoginPage = () => {
   const isLogin = await loginUSer( email, password )
   
 
-  if(!isLogin){
-
-    Swal.fire('Error', 'Verifique el usuario y password', 'error');
-
+  if( ( typeof isLogin === 'string') ){
+    Swal.fire('Error', isLogin, 'error');
+}
+  else{
+   console.log('registrado')
   }
   }
 

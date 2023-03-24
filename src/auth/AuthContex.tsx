@@ -1,16 +1,17 @@
 import  { createContext } from 'react'
-import { AuthProviderProps } from './AuthProvider';
+import { InitialStateProps } from './AuthProvider';
 
 
 export interface ContextProps {
     //props
-    auth:AuthProviderProps;
+    auth:InitialStateProps;
 
 
     //Methods
     loginUSer: (email: string, password: string) => Promise<any>
-    registerUser: (email: string, name: string, password: string) => void;
+    registerUser: (email: string, name: string, password: string) => Promise<any>
     verifyToken : () => void;
+
 
 }
 export const AuthContex = createContext({} as ContextProps);
