@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from 'react';
-import { AuthContex } from '../auth/AuthContex';
+import { AuthContex } from '../context/auth/AuthContex';
 import Swal from 'sweetalert2';
 
 export const LoginPage = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { AuthProvider } from './auth/AuthProvider'
+import { AuthProvider } from './context/auth/AuthProvider'
 
 import { ChatApp } from './ChatApp'
 import './index.css'

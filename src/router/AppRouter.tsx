@@ -1,52 +1,52 @@
-import React from 'react'
-import {  Navigate, Route, Routes } from 'react-router-dom'
-import { LoginPage, RegisterPage,ChatPage } from '../pages'
+import { Navigate, Route, Routes } from "react-router-dom";
+import { LoginPage, RegisterPage, ChatPage } from "../pages";
 
+import "../css/login-register.css";
 
-import '../css/login-register.css'
-import { AuthProvider } from '../auth/AuthProvider'
-import { useContext, useEffect } from 'react';
-import { AuthContex } from '../auth/AuthContex';
+import { useContext, useEffect } from "react";
+import { AuthContex } from "../context/auth/AuthContex";
+import { PrivateRouter } from "./PrivateRouter";
+import { PublicRouter } from "./PublicRouter";
+
 export const AppRouter = () => {
+  const { auth, verifyToken } = useContext(AuthContex);
 
-const {auth, verifyToken } =useContext( AuthContex );
+  console.log({ auth });
 
-console.log({auth})
+  useEffect(() => {
+    const token = verifyToken();
+  }, []);
 
-useEffect(() => {
-  const token = verifyToken()
-  
-}, [])
-
-if( auth.checking ){
- return<h1>espere</h1>
-}
-
-
-
-
-
+  if (auth.checking) {
+    return <h1>espere</h1>;
+  }
 
   return (
-   
     <div className="container">
-		<div className="container-login100">
-			<div className="wrap-login10 p-t-50 p-b-90">
-   
-       
-            <Routes>
-                <Route path="/auth/login" element={<LoginPage />}/>
-                <Route path="/auth/register" element={<RegisterPage/>}/>
-                <Route  path="/" element={<ChatPage/>}/>
-                <Route path="*" element={<Navigate to="/" replace={true}  />}/>
-            </Routes>
-       
-        </div>
-        </div>
-        </div>
+      <div className="container-login100">
+        <div className="wrap-login10 p-t-50 p-b-90">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PublicRouter>
+                  <Route path="/auth/login" element={<LoginPage />} />
+                  <Route path="/auth/register" element={<RegisterPage />} />
+                </PublicRouter>
+              }
+            />
 
-         
-        
-    
-  )
-}
+            <Route
+              path="/home-chat-page"
+              element={
+                <PrivateRouter>
+                  <ChatPage />
+                </PrivateRouter>
+              }
+            />
+          </Routes>
+        </div>
+      </div>
+    </div>
+  );
+};

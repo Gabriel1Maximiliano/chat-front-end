@@ -1,32 +1,21 @@
 import { useCallback, useState } from "react";
-import socketApi from "../api/socketApi";
-import axios from "axios";
+import socketApi from "../../api/socketApi";
+import { InitialStateProps, InitialState, ChildrenProps } from '../../interfaces/interfaces';
+
 import { AuthContex } from "./AuthContex";
 
 
 
-export interface InitialStateProps {
-  uid: string | null;
-  checking: boolean;
-  logged: boolean;
-  name: string | null;
-  email: string | null;
-}
 
-const InitialState: InitialStateProps = {
-  uid: null,
-  checking: true,
-  logged: false,
-  name: null,
-  email: null,
-};
 
-export const AuthProvider = ({ children }: any) => {
-  const token = localStorage.getItem("token");
+export const AuthProvider = ( { children }: ChildrenProps ) => {
 
-  const [auth, setAuth] = useState<InitialStateProps>(InitialState);
+  const token = localStorage.getItem( "token" );
 
-  const loginUSer = async (email: string, password: string) => {
+  const [ auth, setAuth ] = useState<InitialStateProps>( InitialState );
+
+  const loginUSer = async ( email: string, password: string ) => {
+
     try {
       const { data } = await socketApi.post("/login/loginUser", {
         email,
@@ -36,7 +25,7 @@ export const AuthProvider = ({ children }: any) => {
       if (data.ok) {
         const { name, email, onLIne, uid } = data.user;
 
-        localStorage.setItem("token", data.token);
+        localStorage.setItem( "token", data.token );
 
         setAuth((prev) => ({
           ...prev,
@@ -48,15 +37,17 @@ export const AuthProvider = ({ children }: any) => {
         }));
       }
       return data.ok;
-    } catch (error: any) {
+    } catch ( error: any ) {
       return error.response.data.msg;
     }
   };
 
   const registerUser = async (
-    email: string,
-    name: string,
+
+    email   : string,
+    name    : string,
     password: string
+
   ) => {
     try {
       console.log("registro");
@@ -67,9 +58,9 @@ export const AuthProvider = ({ children }: any) => {
         password,
       });
       if (data.ok) {
-        const { name, email, onLIne, uid } = data.user;
+        const { name, email, uid } = data.user;
 
-        localStorage.setItem("token", data.token);
+        localStorage.setItem( "token", data.token );
 
         setAuth({
           uid,
@@ -83,7 +74,7 @@ export const AuthProvider = ({ children }: any) => {
 
       return data.ok;
     } catch (error: any) {
-      console.log(error.response.data.msg);
+      console.log( error.response.data.msg );
 
       return error.response.data.msg;
     }
@@ -95,7 +86,7 @@ export const AuthProvider = ({ children }: any) => {
     const token = localStorage.getItem('token');
     // const token =
     //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDFlMjI3YzNlNmI3OWU3YmZhZjg3NTQiLCJpYXQiOjE2Nzk3MDAxODksImV4cCI6MTY3OTc4NjU4OX0.m5px97kg7UvkaxsOXrWqm68XGTBDlU6j_qYShlaNRuI";
-    if (!token) {
+    if ( !token ) {
       setAuth({
         uid: null,
         checking: false,
@@ -112,7 +103,7 @@ export const AuthProvider = ({ children }: any) => {
    
     //return 'hola'
 
-    if (data.ok) {
+    if ( data.ok ) {
       const { name, email, uid } = data.user;
 
       localStorage.setItem("token", data.token);
@@ -128,11 +119,11 @@ export const AuthProvider = ({ children }: any) => {
       return true;
     } else {
       setAuth({
-        uid: null,
-        name: null,
-        email: null,
+        uid     : null,
+        name    : null,
+        email   : null,
         checking: false,
-        logged: false,
+        logged  : false,
       });
 
       return false;
@@ -149,7 +140,7 @@ export const AuthProvider = ({ children }: any) => {
         verifyToken,
       }}
     >
-      {children}
+      { children }
     </AuthContex.Provider>
   );
 };
