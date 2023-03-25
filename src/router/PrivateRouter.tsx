@@ -14,7 +14,7 @@ export const PrivateRouter = ( { children }: ChildrenProps ) => {
     <>
     {
         logged ?  children 
-        : <Navigate to='/auth/login' replace={true} />
+        : <Navigate to={'/auth/register'} />
     }
     
     </>

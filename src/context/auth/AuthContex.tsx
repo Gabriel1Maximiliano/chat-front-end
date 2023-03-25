@@ -12,6 +12,7 @@ export interface ContextProps {
     loginUSer: ( email: string, password: string ) => Promise<any>
     registerUser: ( email: string, name: string, password: string ) => Promise<any>
     verifyToken : () => void;
+    logoutUser: () => void;
 
 
 }

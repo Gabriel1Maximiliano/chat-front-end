@@ -27,15 +27,15 @@ export const AppRouter = () => {
         <div className="wrap-login10 p-t-50 p-b-90">
           <Routes>
             <Route
-              path="/"
+              path="/*"
               element={
                 <PublicRouter>
-                  <Route path="/auth/login" element={<LoginPage />} />
-                  <Route path="/auth/register" element={<RegisterPage />} />
+                 <LoginPage />
                 </PublicRouter>
               }
             />
-
+          
+             <Route  path="/auth/register" element={ <RegisterPage /> }/>
             <Route
               path="/home-chat-page"
               element={

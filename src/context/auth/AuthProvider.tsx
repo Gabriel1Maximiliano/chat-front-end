@@ -130,6 +130,16 @@ export const AuthProvider = ( { children }: ChildrenProps ) => {
     }
   }, []);
 
+  const logoutUser = () =>{
+    localStorage.removeItem( 'token' );
+    setAuth({
+      uid     : null,
+      name    : null,
+      email   : null,
+      checking: false,
+      logged  : false,
+  })
+  }
 
   return (
     <AuthContex.Provider
@@ -138,6 +148,7 @@ export const AuthProvider = ( { children }: ChildrenProps ) => {
         loginUSer,
         registerUser,
         verifyToken,
+        logoutUser,
       }}
     >
       { children }
