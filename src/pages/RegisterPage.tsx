@@ -25,7 +25,7 @@ export const RegisterPage = () => {
 		})  )
 
 	  }
-	  console.log(form)
+	 
 	  
 const handleSubimtRegister = async(e:any)=>{
 		  e.preventDefault();
