@@ -36,7 +36,7 @@ export const useSockets = (   serverPath:any  ) => {
         () => {
             socket?.diconnect();
         },
-        [ serverPath ],
+        [ serverPath,socket ],
       )
     
     useEffect(() => {

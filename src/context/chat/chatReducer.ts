@@ -3,7 +3,7 @@ import { initialStateChatProps } from "./ChatProvider";
 
 
 type ActionChat = 
-| { type:'[ Chat-Reducer ] Login-User ' }
+| { type:'[ Chat-Reducer ] Login-User ',payload:any }
 
 export const chatReducer = ( state:any, action:ActionChat  ):initialStateChatProps => {
 
@@ -11,6 +11,7 @@ export const chatReducer = ( state:any, action:ActionChat  ):initialStateChatPro
         case '[ Chat-Reducer ] Login-User ':
         return {
          ...state,
+         users:[...action.payload]
         }
 
         default:

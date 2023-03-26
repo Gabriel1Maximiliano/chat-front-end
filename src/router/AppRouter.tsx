@@ -3,7 +3,7 @@ import { LoginPage, RegisterPage, ChatPage } from "../pages";
 
 import "../css/login-register.css";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from 'react';
 import { AuthContex } from "../context/auth/AuthContex";
 import { PrivateRouter } from "./PrivateRouter";
 import { PublicRouter } from "./PublicRouter";
@@ -13,10 +13,12 @@ export const AppRouter = () => {
   const { auth, verifyToken } = useContext(AuthContex);
 
   console.log({ auth });
+  const [ token, setToken ] =useState<any>();
 
   useEffect(() => {
     const token = verifyToken();
-  }, [verifyToken]);
+    setToken( token )
+  }, []);
 
   if (auth?.checking ) {
      

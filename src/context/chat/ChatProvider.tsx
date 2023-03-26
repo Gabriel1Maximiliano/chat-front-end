@@ -23,10 +23,14 @@ export const ChatProvider = ({ children }: ChildrenProps ) => {
 
     const [ chatState, dispatch ] = useReducer(chatReducer, initialChatState );
 
+    const chargeListUsers = ( users:any ) =>{
+      dispatch({type:'[ Chat-Reducer ] Login-User ',payload:users})
+    }
+
   return (
     <ChatContext.Provider value={{ 
         chatState,
-        dispatch
+        chargeListUsers,
 
      }}>
         { children }

@@ -24,7 +24,15 @@ export const SocketProvider = ( { children }:any ) => {
             disconnectSocket()
         }
         
-      }, [auth])
+      }, [auth,disconnectSocket])
+
+
+      useEffect(() => {
+       socket?.on('list-users', (users:any) =>{
+        console.log({users})
+       } );
+        
+      }, [socket])
     
   return (
     <SocketContext.Provider value={{}}>

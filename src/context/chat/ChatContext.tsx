@@ -8,9 +8,7 @@ export interface ChatContextProps {
 
     //Methods
 
-    dispatch: React.Dispatch<{
-        type: "[ Chat-Reducer ] Login-User ";
-    }>
+    chargeListUsers: (users: any) => void
 }
 
 export const ChatContext = createContext( {} as ChatContextProps );
