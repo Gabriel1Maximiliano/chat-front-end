@@ -12,12 +12,12 @@ export const AppRouter = () => {
 
   const { auth, verifyToken } = useContext(AuthContex);
 
-  console.log({ auth });
-  const [ token, setToken ] =useState<any>();
+
+
 
   useEffect(() => {
     const token = verifyToken();
-    setToken( token )
+  
   }, []);
 
   if (auth?.checking ) {

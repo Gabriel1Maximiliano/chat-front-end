@@ -8,7 +8,8 @@ export interface ChatContextProps {
 
     //Methods
 
-    chargeListUsers: (users: any) => void
+    chargeListUsers: (users: any) => void;
+    activateChatRoom: (uid:string) => void;
 }
 
 export const ChatContext = createContext( {} as ChatContextProps );

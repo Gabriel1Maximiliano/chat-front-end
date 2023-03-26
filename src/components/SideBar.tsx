@@ -10,7 +10,7 @@ export const SideBar = () => {
 
   const { auth } = useContext( AuthContex );
   const { users } = chatState;
-  console.log(chatState,'en sidebar')
+
   return (
     
   

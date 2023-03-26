@@ -6,17 +6,17 @@ import { chatReducer } from './chatReducer';
 
     uid       :string;
     activeChat:string;
-    users     :any[];
+    users     :initialStateChatProps[];
     messages  : any[];
     //  uid del user  al que quiero mensajear
 
  }
 
 const initialChatState:initialStateChatProps = {
-    uid: '',
+    uid       : '',
     activeChat: '',
-    users: [],
-    messages: []
+    users     : [],
+    messages  : []
 }
 
 export const ChatProvider = ({ children }: ChildrenProps ) => {
@@ -27,10 +27,15 @@ export const ChatProvider = ({ children }: ChildrenProps ) => {
       dispatch({type:'[ Chat-Reducer ] Charge-List-Users ',payload:users})
     }
 
+    const activateChatRoom = ( uid:string )=>{
+      dispatch({ type:'[Chat-Reducer] Activate-Chat-Room' ,payload:uid})
+    }
+
   return (
     <ChatContext.Provider value={{ 
         chatState,
         chargeListUsers,
+        activateChatRoom,
 
      }}>
         { children }

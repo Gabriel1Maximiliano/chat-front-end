@@ -13,6 +13,7 @@ export interface ContextAuthProps {
     registerUser: ( email: string, name: string, password: string ) => Promise<any>
     verifyToken : () => void;
     logoutUser  : () => void;
+  
 
 
 }
