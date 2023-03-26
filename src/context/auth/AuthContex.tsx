@@ -3,17 +3,17 @@ import { InitialStateProps } from '../../interfaces/interfaces';
 
 
 
-export interface ContextProps {
+export interface ContextAuthProps {
     //props
-    auth:InitialStateProps;
+    auth        :InitialStateProps;
 
 
     //Methods
-    loginUSer: ( email: string, password: string ) => Promise<any>
+    loginUSer   : ( email: string, password: string ) => Promise<any>
     registerUser: ( email: string, name: string, password: string ) => Promise<any>
     verifyToken : () => void;
-    logoutUser: () => void;
+    logoutUser  : () => void;
 
 
 }
-export const AuthContex = createContext( {} as ContextProps );
+export const AuthContex = createContext( {} as ContextAuthProps );

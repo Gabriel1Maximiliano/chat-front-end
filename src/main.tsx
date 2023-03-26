@@ -4,10 +4,13 @@ import { AuthProvider } from './context/auth/AuthProvider'
 
 import { ChatApp } from './ChatApp'
 import './index.css'
+import { ChatProvider } from './context/chat/ChatProvider'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <AuthProvider>
-        <ChatApp />
-    </AuthProvider>
+    <ChatProvider>
+        <AuthProvider>
+            <ChatApp />
+        </AuthProvider>
+    </ChatProvider>
 
 )

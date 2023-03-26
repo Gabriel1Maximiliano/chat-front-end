@@ -9,15 +9,17 @@ import { PrivateRouter } from "./PrivateRouter";
 import { PublicRouter } from "./PublicRouter";
 
 export const AppRouter = () => {
+
   const { auth, verifyToken } = useContext(AuthContex);
 
   console.log({ auth });
 
   useEffect(() => {
     const token = verifyToken();
-  }, []);
+  }, [verifyToken]);
 
-  if (auth.checking) {
+  if (auth?.checking ) {
+     
     return <h1>espere</h1>;
   }
 
