@@ -1,6 +1,7 @@
-import { useContext, createContext } from 'react';
+import { createContext } from 'react';
 
-interface Props {
-    name:string
+interface SocketsProps {
+    socket:any,
+    onLine:boolean;
 }
-export const SocketContext = createContext<any>( {} as any );
+export const SocketContext = createContext<any>( {} as SocketsProps );

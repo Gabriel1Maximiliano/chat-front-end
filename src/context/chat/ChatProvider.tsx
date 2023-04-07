@@ -12,7 +12,7 @@ import { chatReducer } from './chatReducer';
 
  }
 
-const initialChatState:initialStateChatProps = {
+export const initialChatState:initialStateChatProps = {
     uid       : '',
     activeChat: '',
     users     : [],
@@ -28,7 +28,10 @@ export const ChatProvider = ({ children }: ChildrenProps ) => {
     }
 
     const activateChatRoom = ( uid:string )=>{
-      dispatch({ type:'[Chat-Reducer] Activate-Chat-Room' ,payload:uid})
+      dispatch({ type:'[ Chat-Reducer ] Activate-Chat-Room' ,payload:uid})
+    }
+    const newMessage = ( message:string )=>{
+      dispatch({ type:'[ Chat-Reducer ] New-Message',payload:message })
     }
 
   return (
@@ -36,6 +39,7 @@ export const ChatProvider = ({ children }: ChildrenProps ) => {
         chatState,
         chargeListUsers,
         activateChatRoom,
+        newMessage
 
      }}>
         { children }

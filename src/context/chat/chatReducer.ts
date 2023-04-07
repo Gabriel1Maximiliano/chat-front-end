@@ -4,9 +4,10 @@ import { initialStateChatProps } from "./ChatProvider";
 
 type ActionChat = 
 | { type:'[ Chat-Reducer ] Charge-List-Users ',payload:any }
-| { type:'[Chat-Reducer] Activate-Chat-Room',payload:any }
+| { type:'[ Chat-Reducer ] Activate-Chat-Room',payload:any }
+| { type:'[ Chat-Reducer ] New-Message',payload:any }
 
-export const chatReducer = ( state:any, action:ActionChat  ):initialStateChatProps => {
+export const chatReducer = ( state:initialStateChatProps, action:ActionChat  ):initialStateChatProps => {
 
     switch( action.type ){
         case '[ Chat-Reducer ] Charge-List-Users ':
@@ -14,7 +15,7 @@ export const chatReducer = ( state:any, action:ActionChat  ):initialStateChatPro
          ...state,
          users:[...action.payload]
         }
-        case '[Chat-Reducer] Activate-Chat-Room':
+        case '[ Chat-Reducer ] Activate-Chat-Room':
 
         if( state.activeChat === action.payload ) return state;
             return {
@@ -22,6 +23,12 @@ export const chatReducer = ( state:any, action:ActionChat  ):initialStateChatPro
              activeChat: action.payload,
              messages:[],
             }
+        case '[ Chat-Reducer ] New-Message':
+            console.log(action.payload.message)
+            return {
+             ...state,
+             messages: [...state.messages,action.payload]
+             }    
 
         default:
             return state;

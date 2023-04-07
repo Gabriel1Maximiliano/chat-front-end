@@ -1,6 +1,11 @@
+import { useContext } from "react"
+import { ChatContext } from "../context/chat/ChatContext"
 
 
 export const IncommingMessage = () => {
+
+     const { chatState } = useContext( ChatContext )
+     const { messages } = chatState;
   return (
    
     <div className="incoming_msg">
@@ -9,8 +14,9 @@ export const IncommingMessage = () => {
     </div>
     <div className="received_msg">
         <div className="received_withd_msg">
-            <p>Test which is a new approach to have all
-                solutions</p>
+            <p>{ messages.map( (msg:any)=>(
+                 msg
+            ) ) }</p>
             <span className="time_date"> 11:01 AM | June 9</span>
         </div>
     </div>

@@ -12,7 +12,7 @@ export const SocketProvider = ( { children }:any ) => {
     const { socket,onLine,connectSocket,disconnectSocket } = useSockets( 'http://localhost:8080');
 
     const { auth } = useContext( AuthContex );
-    const { chargeListUsers } = useContext( ChatContext );
+    const { chargeListUsers,newMessage } = useContext( ChatContext );
 
     useEffect(() => {
       if( auth.logged ){
@@ -35,6 +35,13 @@ export const SocketProvider = ( { children }:any ) => {
        } );
         
       }, [socket])
+
+      useEffect(() => {
+        socket?.on('personal-message', (message:any) =>{
+          newMessage( message )
+        } );
+         
+       }, [socket,newMessage])
     
   return (
     <SocketContext.Provider value={{
